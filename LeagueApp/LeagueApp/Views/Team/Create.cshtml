@@ -1,0 +1,76 @@
+﻿@model AddTeamsViewModel
+
+@{
+    ViewData["Title"] = "Name Of Teams";
+}
+
+<nav class="navbar navbar-expand-lg bg-light m-4" data-bs-theme="light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">League</a>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Team" asp-action="Create">Create</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Matches" asp-action="Index">Matches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="League" asp-action="Index">Table</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="d-grid gap-2 mb-5">
+    <a asp-action="Index" asp-controller="Team" class="btn btn-lg btn-primary" >Teams Added</a>
+    @*<button class="btn btn-lg btn-primary" type="button">Block button</button>*@
+</div>
+
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row mb-4">
+        <label asp-for="Name" class="form-label">Team Name</label>
+        <input asp-for="Name" type="text" class="form-control" placeholder="Enter Team Name">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group row mb-4">
+        <label asp-for="Cover" class="col-sm-2 col-form-label">Logo</label>
+        <input class="form-control" type="file" asp-for="Cover"
+            data-rule-extension="@FileSettings.AllowedExtensions.Replace(".",string.Empty)"
+            data-msg-extension="Not Allowed Extension"
+               data-rule-filesize="@FileSettings.MaxFileSiezInBytes"
+               data-msg-filesize="Max Allowed size is @FileSettings.MaxFileSiezInMB">
+        <small class="form-text text-muted">Only .jpg/.jpeg/.png are allowed with max size 1MB.</small>
+
+        <span asp-validation-for="Cover" class="text-danger d-block"></span>
+        <div>
+            <img class="cover-preview d-none" src="@($"{FileSettings.ImagePath}/{Model.Cover}")" style="background-size:cover; background-position:center; height:150px ;width:150px;" ; />
+        </div>
+    </div>
+
+    <div class="m-4">
+        <button type="submit" class="btn btn-primary">Add</button>
+    </div>
+
+    <div class="d-grid gap-2 mb-5">
+        <a asp-action="Index" asp-controller="Team" class="btn btn-lg btn-primary">Next
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/fileSize-validator.js" asp-append-version="true"></script>
+    <script src="~/js/img-form.js" asp-append-version="true"></script>
+}
+
+
+

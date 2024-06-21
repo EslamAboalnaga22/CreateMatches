@@ -1,0 +1,30 @@
+﻿@model EditResultViewModel
+
+@{
+    ViewData["Title"] = "Update Result";
+}
+
+
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group row mb-4">
+        <label asp-for="GoalsTeamOne" class="form-label">First Team</label>
+        <input asp-for="GoalsTeamOne" type="number" class="form-control">
+        <span asp-validation-for="GoalsTeamOne" class="text-danger"></span>
+    </div>
+
+    <div class="form-group row mb-4">
+        <label asp-for="GoalsTeamTwo" class="form-label">Second Team</label>
+        <input asp-for="GoalsTeamTwo" type="number" class="form-control">
+        <span asp-validation-for="GoalsTeamTwo" class="text-danger"></span>
+    </div>
+
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary" id="SaveResultBtn">Edit</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

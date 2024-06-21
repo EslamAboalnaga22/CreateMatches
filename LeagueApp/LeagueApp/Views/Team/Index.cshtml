@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Team>
+
+
+@{
+    ViewData["Title"] = "Teams";
+}
+
+<div class="d-grid gap-2 mb-5">
+    <a asp-action="Create" asp-controller="Team" class="btn btn-lg btn-primary">Add Another Team</a>
+    @*<button class="btn btn-lg btn-primary" type="button">Block button</button>*@
+</div>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Points</th>
+            <th scope="col">Played</th>
+            <th scope="col">Won</th>
+            <th scope="col">Drawn</th>
+            <th scope="col">Lost</th>
+            <th scope="col">GF</th>
+            <th scope="col">GA</th>
+            <th scope="col">GD</th>
+            <th scope="col">Logo</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="table-primary">
+                <td>@item.Name</td>
+                <td>@item.Points</td>
+                <td>@item.Played</td>
+                <td>@item.Won</td>
+                <td>@item.Drawn</td>
+                <td>@item.Lost</td>
+                <td>@item.GF</td>
+                <td>@item.GA</td>
+                <td>@item.GD</td>
+                <td>
+                    @if (item.ImageUrl != null)
+                    {
+                        <img class="cover-preview" src="@($"{FileSettings.ImagePath}/{item.ImageUrl}")" alt="@item.Name" style="background-size:cover; background-position:center; height:80px ;width:80px;" ; />
+                    }
+                </td>
+                <td>
+                   @* <a asp-action="Details" asp-controller="Musican" asp-route-id="@item.Id" class="btn btn-success">Details</a>*@
+                    <a asp-action="Update" asp-controller="Team" asp-route-id="@item.Id" class="btn btn-warning">Update</a>
+                    <a asp-action="Delete" asp-controller="Team" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-grid gap-2 mb-5">
+    <a asp-action="Match" asp-controller="Home" class="btn btn-lg btn-primary">
+        Next
+        <i class="fa-solid fa-arrow-right btn-warning"></i>
+    </a>
+</div>
+
+

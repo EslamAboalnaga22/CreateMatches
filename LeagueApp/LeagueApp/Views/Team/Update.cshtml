@@ -1,0 +1,43 @@
+﻿@model EditTeamViewModel
+
+@{
+    ViewBag.Title = "Update";
+}
+
+<form method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row mb-4">
+        <label asp-for="Name" class="form-label">Team Name</label>
+        <input asp-for="Name" type="text" class="form-control">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+
+
+    <div class="form-group row mb-4">
+        <label asp-for="Cover" class="col-sm-2 col-form-label">Logo</label>
+        <input class="form-control" type="file" asp-for="Cover"
+               data-rule-extension="@FileSettings.AllowedExtensions.Replace(".",string.Empty)"
+               data-msg-extension="Not Allowed Extension"
+               data-rule-filesize="@FileSettings.MaxFileSiezInBytes"
+               data-msg-filesize="Max Allowed size is @FileSettings.MaxFileSiezInMB">
+        <small class="form-text text-muted">Only .jpg/.jpeg/.png are allowed with max size 1MB.</small>
+
+        <span asp-validation-for="Cover" class="text-danger d-block"></span>
+        <div>
+            <img class="cover-preview" src="@($"{FileSettings.ImagePath}/{Model.CurrentCover}")" style="background-size:cover; background-position:center; height:150px ;width:150px;" ; />
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Index" asp-controller="League" class="btn btn-dark">Back</a>
+    </div>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/filesize-validator.js" asp-append-version="true"></script>
+    <script src="~/js/img-form.js" asp-append-version="true"></script>
+}

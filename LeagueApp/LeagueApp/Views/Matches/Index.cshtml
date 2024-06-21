@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Matches>
+
+<nav class="navbar navbar-expand-lg bg-light m-4" data-bs-theme="light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">League</a>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                @if (User.IsInRole("Admin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Team" asp-action="Create">Create</a>
+                    </li>
+                }
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="Matches" asp-action="Index">Matches</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="League" asp-action="Index">Table</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<form method="post">
+<div class="week-matches">
+    <div class="contain">
+        @foreach (var item in Model)
+        {
+            <div class="match">
+                    <h3>@item.One.Name</h3>
+                    <input asp-for="@item.GoalsTeamOne" type="number" id="Team1" disabled />
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="CreateResult" asp-controller="Matches" asp-route-id="@item.Id" class="btn btn-primary" id="AddResultBtn">Add</a>
+                        <a style="pointer-events:none; cursor:default" asp-action="UpdateResult" asp-controller="Matches" asp-route-id="@item.Id" class="btn btn-warning" id="EditResultBtn">Edit</a>
+                    }      
+                    <input asp-for="@item.GoalsTeamTwo" type="number" id="Team2" disabled />
+                    <h3>@item.Two.Name</h3>
+            </div>
+        }
+
+    </div>
+</div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/fileSize-validator.js"></script>
+   <script src="~/js/disable-addresultbtn.js"></script>
+
+}
+
+
